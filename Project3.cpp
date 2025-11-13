@@ -13,12 +13,49 @@ My Town Population Growth
 */
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <limits>
 
 using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    string fileName, townName;
+
+    cout << " Enter the population data file name: ";
+    cin >> fileName;
+
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+
+    cout << " Enter the name of the town: ";
+    getline(cin, townName);
+
+    ifstream inputFile(fileName);
+    if (!inputFile) {
+        cout << " Error: coult not open file " << fileName << endl;
+        return 1;
+    }
+
+    cout << "\n" << townName << " Population Growth\n";
+    cout << " (each * represents 1,000 people)|n|n";
+
+    int year = 1900, population;
+
+    while (inputFile >> population) {
+        cout << year << " ";
+
+        int stars = population / 1000;
+        for (int i = 0; i < stars; ++i) {
+            cout << '*';
+        }
+        cout << endl;
+
+        year += 20;
+    }
+
+    inputFile.close();
+    return 0;
 }
 
 
